@@ -1,4 +1,4 @@
-package com.thoughtworks.basic;
+package com.thoughtworks.basic.example;
 
 public class HelloWorld {
     private Dependency dependency;

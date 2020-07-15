@@ -1,4 +1,4 @@
-package com.thoughtworks.basic;
+package com.thoughtworks.basic.example;
 
 import org.junit.Test;
 
