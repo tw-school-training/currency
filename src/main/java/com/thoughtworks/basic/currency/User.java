@@ -13,15 +13,23 @@ class User {
     }
 
     String listAll() {
-        String stocksMessage = stocks.stream()
-                .map(Stock::buildMessage)
-                .collect(Collectors.joining("\n"));
-        BigDecimal total = calculateTotal();
-
-        String footer = String.format("\n-----------------------------\n" +
-                "合计:%s美元", total.stripTrailingZeros().toPlainString());
+        String stocksMessage = buildStocksMessage();
+        String footer = buildFooter();
 
         return stocksMessage + footer;
+    }
+
+    private String buildStocksMessage() {
+        return stocks.stream()
+                .map(Stock::buildMessage)
+                .collect(Collectors.joining("\n"));
+    }
+
+    private String buildFooter() {
+        BigDecimal total = calculateTotal();
+
+        return String.format("\n-----------------------------\n" +
+                "合计:%s美元", total.stripTrailingZeros().toPlainString());
     }
 
     private BigDecimal calculateTotal() {
