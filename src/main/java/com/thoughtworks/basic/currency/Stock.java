@@ -1,5 +1,7 @@
 package com.thoughtworks.basic.currency;
 
+import java.math.BigDecimal;
+
 class Stock {
     private final String symbol;
     private final int share;
@@ -12,14 +14,18 @@ class Stock {
     }
 
     String buildMessage() {
-        int subTotal = calculateSubtotal();
+        BigDecimal subTotal = calculateSubtotal();
         int value = money.getValue();
-        String unit = money.getUnit();
+        CurrencyUnit unit = money.getUnit();
 
-        return String.format("%s %d股 %d%s/股 小计:%d%s", symbol, share, value, unit, subTotal, unit);
+        return String.format("%s %d股 %d%s/股 小计:%s%s", symbol, share, value, unit, subTotal.stripTrailingZeros().toPlainString(), unit);
     }
 
-    int calculateSubtotal() {
-        return share * money.getValue();
+    private BigDecimal calculateSubtotal() {
+        return BigDecimal.valueOf(share * money.getValue());
+    }
+
+    BigDecimal calculateExchangedSubtotal() {
+        return money.getExchangeRate(CurrencyUnit.USD).multiply(BigDecimal.valueOf(share * money.getValue()));
     }
 }

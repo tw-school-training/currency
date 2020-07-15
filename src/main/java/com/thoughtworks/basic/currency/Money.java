@@ -1,5 +1,7 @@
 package com.thoughtworks.basic.currency;
 
+import java.math.BigDecimal;
+
 class Money {
     private final int value;
     private final CurrencyUnit unit;
@@ -13,7 +15,20 @@ class Money {
         return value;
     }
 
-    String getUnit() {
-        return unit.toString();
+    CurrencyUnit getUnit() {
+        return unit;
+    }
+
+    @Override
+    public String toString() {
+        return value + unit.toString();
+    }
+
+    BigDecimal getExchangeRate(CurrencyUnit toUnit) {
+        if (this.unit == toUnit) {
+            return new BigDecimal(1);
+        }
+        Rate rate = new Rate();
+        return rate.findExchangeRate(this.unit, toUnit);
     }
 }

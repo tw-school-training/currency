@@ -1,5 +1,6 @@
 package com.thoughtworks.basic.currency;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,16 +16,17 @@ class User {
         String stocksMessage = stocks.stream()
                 .map(Stock::buildMessage)
                 .collect(Collectors.joining("\n"));
-        int total = calculateTotal();
+        BigDecimal total = calculateTotal();
 
         String footer = String.format("\n-----------------------------\n" +
-                "合计:%d美元", total);
+                "合计:%s美元", total.stripTrailingZeros().toPlainString());
 
         return stocksMessage + footer;
     }
 
-    private int calculateTotal() {
-        return stocks.stream().mapToInt(Stock::calculateSubtotal)
-                .sum();
+    private BigDecimal calculateTotal() {
+        return stocks.stream()
+                .map(Stock::calculateExchangedSubtotal)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }
