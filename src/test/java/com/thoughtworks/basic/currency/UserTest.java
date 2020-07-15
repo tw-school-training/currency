@@ -10,8 +10,8 @@ public class UserTest {
     public void should_return_all_stocks_when_list_given_user_several_stocks() {
         //given
         User user = new User();
-        Stock ibmStock = new Stock("IBM", 1000, 25);
-        Stock geStock = new Stock("GE", 400, 100);
+        Stock ibmStock = new Stock("IBM", 1000, new Money(25, CurrencyUnit.USD));
+        Stock geStock = new Stock("GE", 400, new Money(100, CurrencyUnit.USD));
         user.buy(ibmStock);
         user.buy(geStock);
 
