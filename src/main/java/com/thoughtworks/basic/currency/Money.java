@@ -31,4 +31,8 @@ class Money {
         Rate rate = new Rate();
         return rate.findExchangeRate(this.unit, toUnit);
     }
+
+    Money multiply(int amount) {
+        return new Money(value * amount, unit);
+    }
 }

@@ -14,15 +14,13 @@ class Stock {
     }
 
     String buildMessage() {
-        BigDecimal subTotal = calculateSubtotal();
-        int value = money.getValue();
-        CurrencyUnit unit = money.getUnit();
+        Money subTotal = calculateSubtotal();
 
-        return String.format("%s %d股 %d%s/股 小计:%s%s", symbol, share, value, unit, subTotal.stripTrailingZeros().toPlainString(), unit);
+        return String.format("%s %d股 %s/股 小计:%s", symbol, share, money.toString(), subTotal.toString());
     }
 
-    private BigDecimal calculateSubtotal() {
-        return BigDecimal.valueOf(share * money.getValue());
+    private Money calculateSubtotal() {
+        return money.multiply(share);
     }
 
     BigDecimal calculateExchangedSubtotal() {
