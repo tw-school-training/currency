@@ -14,12 +14,13 @@ class Money {
         rate = new Rate();
     }
 
-    Money multiply(int amount) {
-        return new Money(value.multiply(BigDecimal.valueOf(amount)), unit);
+    Money multiply(int multiplier) {
+        BigDecimal formattedMultiplier = BigDecimal.valueOf(multiplier);
+        return multiply(formattedMultiplier);
     }
 
-    Money multiply(BigDecimal ratio) {
-        return new Money(value.multiply(ratio), unit);
+    Money multiply(BigDecimal multiplier) {
+        return new Money(value.multiply(multiplier), unit);
     }
 
     Money exchange(CurrencyUnit toUnit) {
