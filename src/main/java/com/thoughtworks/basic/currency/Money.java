@@ -5,10 +5,12 @@ import java.math.BigDecimal;
 class Money {
     private BigDecimal value;
     private CurrencyUnit unit;
+    private Rate rate;
 
     Money(BigDecimal value, CurrencyUnit unit) {
         this.value = value;
         this.unit = unit;
+        rate = new Rate();
     }
 
     @Override
@@ -20,7 +22,6 @@ class Money {
         if (unit == toUnit) {
             return new BigDecimal(1);
         }
-        Rate rate = new Rate();
         return rate.findExchangeRate(unit, toUnit);
     }
 
