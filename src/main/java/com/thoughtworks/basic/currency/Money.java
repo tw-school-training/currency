@@ -30,6 +30,10 @@ class Money {
         return new Money(value.multiply(BigDecimal.valueOf(amount)), unit);
     }
 
+    Money multiply(BigDecimal ratio) {
+        return new Money(value.multiply(ratio), unit);
+    }
+
     Money exchange(CurrencyUnit toUnit) {
         return new Money(getExchangeRate(toUnit).multiply(value), toUnit);
     }
@@ -47,7 +51,7 @@ class Money {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Money money = (Money) o;
-        return value.equals(money.value) &&
+        return value.stripTrailingZeros().equals(money.value.stripTrailingZeros()) &&
                 unit == money.unit;
     }
 
