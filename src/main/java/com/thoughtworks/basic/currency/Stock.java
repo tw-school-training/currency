@@ -16,28 +16,24 @@ class Stock {
     }
 
     String buildMessage() {
-        Money subTotal = calculateSubtotal();
+        Money subTotal = calculateSubtotal(share);
 
         return String.format("%s %d股 %s/股 小计:%s", symbol, share, money.toString(), subTotal.toString());
     }
 
-    private Money calculateSubtotal() {
+    private Money calculateSubtotal(int share) {
         return money.multiply(share);
     }
 
     Money calculateExchangedSubtotal(CurrencyUnit currencyUnit) {
-        return calculateSubtotal().exchange(currencyUnit);
+        return calculateSubtotal(share).exchange(currencyUnit);
     }
 
-    private Money calculateRedeemTransactionFee(int share) {
-        if(share > REDEEM_TRANSACTION_FEE_REQUIRED_MAX_SHARE) {
+    private Money calculateRedeemTransactionFee(int redeemShare) {
+        if(redeemShare > REDEEM_TRANSACTION_FEE_REQUIRED_MAX_SHARE) {
             return new Money(BigDecimal.ZERO, money.getUnit());
         }
-        return calculateRedeemSubtotal(share).multiply(REDEEM_TRANSACTION_FEE_RATIO);
-    }
-
-    private Money calculateRedeemSubtotal(int share) {
-        return money.multiply(share);
+        return calculateSubtotal(redeemShare).multiply(REDEEM_TRANSACTION_FEE_RATIO);
     }
 
     String redeem(int share) {
