@@ -30,4 +30,16 @@ public class StockTest {
         //then
         assertEquals("Novartis 400股 150瑞士法郎/股 小计:60000瑞士法郎", message);
     }
+
+    @Test
+    public void should_return_transaction_fee_0_when_redeem_given_shares_greater_than_499() {
+        //given
+        Stock ibmStock = new Stock("Novartis", 1000, new Money(new BigDecimal(100), CurrencyUnit.CHF));
+
+        //when
+        Money transactionFee = ibmStock.calculateRedeemTransactionFee(500);
+
+        //then
+        assertEquals(new Money(BigDecimal.ZERO, CurrencyUnit.CHF), transactionFee);
+    }
 }

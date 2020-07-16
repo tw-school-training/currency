@@ -1,6 +1,7 @@
 package com.thoughtworks.basic.currency;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 class Money {
     private BigDecimal value;
@@ -35,5 +36,23 @@ class Money {
 
     Money add(Money addend, CurrencyUnit currencyUnit) {
         return new Money(value.add(addend.value), currencyUnit);
+    }
+
+    CurrencyUnit getUnit() {
+        return unit;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Money money = (Money) o;
+        return value.equals(money.value) &&
+                unit == money.unit;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value, unit);
     }
 }

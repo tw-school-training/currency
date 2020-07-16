@@ -1,9 +1,12 @@
 package com.thoughtworks.basic.currency;
 
+import java.math.BigDecimal;
+
 class Stock {
     private final String symbol;
     private final int share;
     private Money money;
+    private int REDEEM_TRANSACTION_FEE_REQUIED_MAX_SHARE = 499;
 
     Stock(String symbol, int share, Money money) {
         this.symbol = symbol;
@@ -23,5 +26,12 @@ class Stock {
 
     Money calculateExchangedSubtotal(CurrencyUnit currencyUnit) {
         return calculateSubtotal().exchange(currencyUnit);
+    }
+
+    Money calculateRedeemTransactionFee(int share) {
+        if(share > REDEEM_TRANSACTION_FEE_REQUIED_MAX_SHARE) {
+            return new Money(BigDecimal.ZERO, money.getUnit());
+        }
+        return null;
     }
 }
