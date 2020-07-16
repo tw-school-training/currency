@@ -21,7 +21,7 @@ class Stock {
         return money.multiply(share);
     }
 
-    Money calculateExchangedSubtotal() {
-        return calculateSubtotal().exchange();
+    Money calculateExchangedSubtotal(CurrencyUnit currencyUnit) {
+        return calculateSubtotal().exchange(currencyUnit);
     }
 }

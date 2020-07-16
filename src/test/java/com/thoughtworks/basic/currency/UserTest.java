@@ -18,7 +18,7 @@ public class UserTest {
         user.buy(geStock);
 
         //when
-        String stockList = user.listAll();
+        String stockList = user.listAll(CurrencyUnit.USD);
 
         //then
         assertEquals("IBM 1000股 25美元/股 小计:25000美元\n" +
@@ -37,7 +37,7 @@ public class UserTest {
         user.buy(geStock);
 
         //when
-        String stockList = user.listAll();
+        String stockList = user.listAll(CurrencyUnit.USD);
 
         //then
         assertEquals("IBM 1000股 25美元/股 小计:25000美元\n" +

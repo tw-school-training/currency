@@ -12,9 +12,9 @@ class User {
         stocks.add(stock);
     }
 
-    String listAll() {
+    String listAll(CurrencyUnit totalCurrencyUnit) {
         String stocksMessage = buildStocksMessage();
-        String footer = buildFooter();
+        String footer = buildFooter(totalCurrencyUnit);
 
         return stocksMessage + footer;
     }
@@ -25,17 +25,17 @@ class User {
                 .collect(Collectors.joining("\n"));
     }
 
-    private String buildFooter() {
-        Money total = calculateTotal();
+    private String buildFooter(CurrencyUnit currencyUnit) {
+        Money total = calculateTotal(currencyUnit);
 
         return String.format("\n-----------------------------\n" +
                 "合计:%s", total.toString());
     }
 
-    private Money calculateTotal() {
-        Money total = new Money(new BigDecimal(0), CurrencyUnit.USD);
+    private Money calculateTotal(CurrencyUnit currencyUnit) {
+        Money total = new Money(new BigDecimal(0), currencyUnit);
         for (Stock stock : stocks) {
-            total = total.add(stock.calculateExchangedSubtotal());
+            total = total.add(stock.calculateExchangedSubtotal(currencyUnit), currencyUnit);
         }
         return total;
     }
