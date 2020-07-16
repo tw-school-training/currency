@@ -21,19 +21,8 @@ class Stock {
         return String.format("%s %d股 %s/股 小计:%s", symbol, share, money.toString(), subTotal.toString());
     }
 
-    private Money calculateSubtotal(int share) {
-        return money.multiply(share);
-    }
-
     Money calculateExchangedSubtotal(CurrencyUnit currencyUnit) {
         return calculateSubtotal(share).exchange(currencyUnit);
-    }
-
-    private Money calculateRedeemTransactionFee(int redeemShare) {
-        if(redeemShare > REDEEM_TRANSACTION_FEE_REQUIRED_MAX_SHARE) {
-            return new Money(BigDecimal.ZERO, money.getUnit());
-        }
-        return calculateSubtotal(redeemShare).multiply(REDEEM_TRANSACTION_FEE_RATIO);
     }
 
     String redeem(int share) {
@@ -41,6 +30,17 @@ class Stock {
         Money transactionFee = calculateRedeemTransactionFee(share);
 
         return String.format("Redeem %s %d股 %s/股 交易费用:%s", symbol, share, money.toString(), transactionFee.toString());
+    }
+
+    private Money calculateSubtotal(int share) {
+        return money.multiply(share);
+    }
+
+    private Money calculateRedeemTransactionFee(int redeemShare) {
+        if(redeemShare > REDEEM_TRANSACTION_FEE_REQUIRED_MAX_SHARE) {
+            return new Money(BigDecimal.ZERO, money.getUnit());
+        }
+        return calculateSubtotal(redeemShare).multiply(REDEEM_TRANSACTION_FEE_RATIO);
     }
 
     private void updateShare(int redeemedShare) {

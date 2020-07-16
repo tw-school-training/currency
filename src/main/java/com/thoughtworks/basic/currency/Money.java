@@ -14,18 +14,6 @@ class Money {
         rate = new Rate();
     }
 
-    @Override
-    public String toString() {
-        return value.stripTrailingZeros().toPlainString() + unit.toString();
-    }
-
-    private BigDecimal getExchangeRate(CurrencyUnit toUnit) {
-        if (unit == toUnit) {
-            return new BigDecimal(1);
-        }
-        return rate.findExchangeRate(unit, toUnit);
-    }
-
     Money multiply(int amount) {
         return new Money(value.multiply(BigDecimal.valueOf(amount)), unit);
     }
@@ -47,6 +35,11 @@ class Money {
     }
 
     @Override
+    public String toString() {
+        return value.stripTrailingZeros().toPlainString() + unit.toString();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -58,5 +51,12 @@ class Money {
     @Override
     public int hashCode() {
         return Objects.hash(value, unit);
+    }
+
+    private BigDecimal getExchangeRate(CurrencyUnit toUnit) {
+        if (unit == toUnit) {
+            return new BigDecimal(1);
+        }
+        return rate.findExchangeRate(unit, toUnit);
     }
 }

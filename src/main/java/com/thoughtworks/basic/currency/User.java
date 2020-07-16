@@ -20,6 +20,13 @@ class User {
         return stocksMessage + footer;
     }
 
+    String redeem(Map<Stock, Integer> redemption) {
+        return redemption.keySet()
+                .stream()
+                .map(stock -> stock.redeem(redemption.get(stock)))
+                .collect(Collectors.joining("\n"));
+    }
+
     private String buildStocksMessage() {
         return stocks.stream()
                 .map(Stock::buildMessage)
@@ -39,12 +46,5 @@ class User {
             total = total.add(stock.calculateExchangedSubtotal(currencyUnit), currencyUnit);
         }
         return total;
-    }
-
-    String redeem(Map<Stock, Integer> redemption) {
-        return redemption.keySet()
-                .stream()
-                .map(stock -> stock.redeem(redemption.get(stock)))
-                .collect(Collectors.joining("\n"));
     }
 }
