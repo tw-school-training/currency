@@ -3,25 +3,17 @@ package com.thoughtworks.basic.currency;
 import java.math.BigDecimal;
 
 class Money {
-    private final int value;
-    private final CurrencyUnit unit;
+    private BigDecimal value;
+    private CurrencyUnit unit;
 
-    Money(int value, CurrencyUnit unit) {
+    Money(BigDecimal value, CurrencyUnit unit) {
         this.value = value;
         this.unit = unit;
     }
 
-    int getValue() {
-        return value;
-    }
-
-    CurrencyUnit getUnit() {
-        return unit;
-    }
-
     @Override
     public String toString() {
-        return value + unit.toString();
+        return value.stripTrailingZeros().toPlainString() + unit.toString();
     }
 
     BigDecimal getExchangeRate(CurrencyUnit toUnit) {
@@ -33,6 +25,14 @@ class Money {
     }
 
     Money multiply(int amount) {
-        return new Money(value * amount, unit);
+        return new Money(value.multiply(BigDecimal.valueOf(amount)), unit);
+    }
+
+    Money exchange() {
+        return new Money(getExchangeRate(CurrencyUnit.USD).multiply(value), CurrencyUnit.USD);
+    }
+
+    Money add(Money addend) {
+        return new Money(value.add(addend.value), CurrencyUnit.USD);
     }
 }

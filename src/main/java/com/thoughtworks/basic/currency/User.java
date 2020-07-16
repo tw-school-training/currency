@@ -26,15 +26,17 @@ class User {
     }
 
     private String buildFooter() {
-        BigDecimal total = calculateTotal();
+        Money total = calculateTotal();
 
         return String.format("\n-----------------------------\n" +
-                "合计:%s美元", total.stripTrailingZeros().toPlainString());
+                "合计:%s", total.toString());
     }
 
-    private BigDecimal calculateTotal() {
-        return stocks.stream()
-                .map(Stock::calculateExchangedSubtotal)
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    private Money calculateTotal() {
+        Money total = new Money(new BigDecimal(0), CurrencyUnit.USD);
+        for (Stock stock : stocks) {
+            total = total.add(stock.calculateExchangedSubtotal());
+        }
+        return total;
     }
 }
