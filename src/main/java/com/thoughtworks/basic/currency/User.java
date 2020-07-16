@@ -13,7 +13,7 @@ class User {
         stocks.add(stock);
     }
 
-    String listAll(CurrencyUnit totalCurrencyUnit) {
+    String showPropertyStatus(CurrencyUnit totalCurrencyUnit) {
         String stocksMessage = buildStocksMessage();
         String footer = buildFooter(totalCurrencyUnit);
 

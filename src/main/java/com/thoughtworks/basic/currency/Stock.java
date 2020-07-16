@@ -6,7 +6,7 @@ class Stock {
     private final String symbol;
     private int share;
     private Money money;
-    private int REDEEM_TRANSACTION_FEE_REQUIED_MAX_SHARE = 499;
+    private int REDEEM_TRANSACTION_FEE_REQUIRED_MAX_SHARE = 499;
     private BigDecimal REDEEM_TRANSACTION_FEE_RATIO = BigDecimal.valueOf(0.001);
 
     Stock(String symbol, int share, Money money) {
@@ -30,7 +30,7 @@ class Stock {
     }
 
     private Money calculateRedeemTransactionFee(int share) {
-        if(share > REDEEM_TRANSACTION_FEE_REQUIED_MAX_SHARE) {
+        if(share > REDEEM_TRANSACTION_FEE_REQUIRED_MAX_SHARE) {
             return new Money(BigDecimal.ZERO, money.getUnit());
         }
         return calculateRedeemSubtotal(share).multiply(REDEEM_TRANSACTION_FEE_RATIO);

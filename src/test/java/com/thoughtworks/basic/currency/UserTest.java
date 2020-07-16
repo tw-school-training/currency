@@ -19,7 +19,7 @@ public class UserTest {
         user.buy(geStock);
 
         //when
-        String stockList = user.listAll(CurrencyUnit.USD);
+        String stockList = user.showPropertyStatus(CurrencyUnit.USD);
 
         //then
         assertEquals("IBM 1000股 25美元/股 小计:25000美元\n" +
@@ -38,7 +38,7 @@ public class UserTest {
         user.buy(geStock);
 
         //when
-        String stockList = user.listAll(CurrencyUnit.USD);
+        String stockList = user.showPropertyStatus(CurrencyUnit.USD);
 
         //then
         assertEquals("IBM 1000股 25美元/股 小计:25000美元\n" +
@@ -61,7 +61,7 @@ public class UserTest {
 
         //when
         String redemptionMessage = user.redeem(redemption);
-        String stockList = user.listAll(CurrencyUnit.USD);
+        String stockList = user.showPropertyStatus(CurrencyUnit.USD);
 
         //then
         assertEquals("Redeem Novartis 400股 100瑞士法郎/股 交易费用:40瑞士法郎\n" +
