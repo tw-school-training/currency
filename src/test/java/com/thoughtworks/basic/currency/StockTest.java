@@ -34,25 +34,24 @@ public class StockTest {
     @Test
     public void should_return_transaction_fee_0_when_redeem_given_shares_greater_than_499() {
         //given
-        Stock ibmStock = new Stock("Novartis", 1000, new Money(new BigDecimal(100), CurrencyUnit.CHF));
+        Stock novartisStock = new Stock("Novartis", 1000, new Money(new BigDecimal(100), CurrencyUnit.CHF));
 
         //when
-        Money transactionFee = ibmStock.calculateRedeemTransactionFee(500);
+        String message = novartisStock.redeem(500);
 
         //then
-        assertEquals(new Money(BigDecimal.ZERO, CurrencyUnit.CHF), transactionFee);
+        assertEquals("Redeem Novartis 500股 100瑞士法郎/股 交易费用:0瑞士法郎", message);
     }
 
     @Test
     public void should_return_transaction_fee_when_redeem_given_shares_equal_or_less_than_499() {
         //given
-        Stock ibmStock = new Stock("Novartis", 1000, new Money(new BigDecimal(100), CurrencyUnit.CHF));
-        Money expected = new Money(BigDecimal.valueOf(40), CurrencyUnit.CHF);
+        Stock novartisStock = new Stock("Novartis", 1000, new Money(new BigDecimal(100), CurrencyUnit.CHF));
 
         //when
-        Money transactionFee = ibmStock.calculateRedeemTransactionFee(400);
+        String message = novartisStock.redeem(400);
 
         //then
-        assertEquals(expected, transactionFee);
+        assertEquals("Redeem Novartis 400股 100瑞士法郎/股 交易费用:40瑞士法郎", message);
     }
 }

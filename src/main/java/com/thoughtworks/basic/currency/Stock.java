@@ -29,7 +29,7 @@ class Stock {
         return calculateSubtotal().exchange(currencyUnit);
     }
 
-    Money calculateRedeemTransactionFee(int share) {
+    private Money calculateRedeemTransactionFee(int share) {
         if(share > REDEEM_TRANSACTION_FEE_REQUIED_MAX_SHARE) {
             return new Money(BigDecimal.ZERO, money.getUnit());
         }
@@ -38,5 +38,11 @@ class Stock {
 
     private Money calculateRedeemSubtotal(int share) {
         return money.multiply(share);
+    }
+
+    String redeem(int share) {
+        Money transactionFee = calculateRedeemTransactionFee(share);
+
+        return String.format("Redeem %s %d股 %s/股 交易费用:%s", symbol, share, money.toString(), transactionFee.toString());
     }
 }
