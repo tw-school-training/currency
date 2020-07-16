@@ -3,6 +3,7 @@ package com.thoughtworks.basic.currency;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 class User {
@@ -38,5 +39,12 @@ class User {
             total = total.add(stock.calculateExchangedSubtotal(currencyUnit), currencyUnit);
         }
         return total;
+    }
+
+    String redeem(Map<Stock, Integer> redemption) {
+        return redemption.keySet()
+                .stream()
+                .map(stock -> stock.redeem(redemption.get(stock)))
+                .collect(Collectors.joining("\n"));
     }
 }
